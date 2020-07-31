@@ -74,7 +74,7 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
-              onClick={() => toggleModal("false")} 
+              onClick={() => { reset(); toggleModal("false")}} 
             >
               Cancel
             </button>
@@ -91,7 +91,7 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
       </div>
       <div 
         className="modal-overlay"
-        onClick={() => toggleModal("false")}
+        onClick={() => { reset(); toggleModal("false")}}
       ></div>
     </div>
   )} else { return (
@@ -117,7 +117,7 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
               data-dismiss="modal"
               aria-label="Close"
             
-              onClick={() => toggleModal("false")}
+              onClick={() => { reset(); toggleModal("false")}}
             >
               <span aria-hidden="true">×</span>
             </button>
@@ -143,6 +143,9 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
                 value={ form.title }
                 onChange={ updateField }
               />
+              <small id="name" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
             </div>
             <div className="form-group">
               <label htmlFor="description">Description</label>
@@ -161,7 +164,7 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
               type="button"
               className="btn btn-secondary"
               data-dismiss="modal"
-              onClick={() => toggleModal("false")} 
+              onClick={() => { reset(); toggleModal("false")}} 
             >
               Cancel
             </button>
@@ -179,7 +182,7 @@ const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, up
       </div>
       <div 
         className="modal-overlay"
-        onClick={() => toggleModal("false")}
+        onClick={() => { reset(); toggleModal("false")}}
       ></div>
     </div>
   )}
