@@ -10,6 +10,9 @@ export default initialValue => {
   const [tasks, setTasks] = useState(defaultTasks);
 
   return {
-    tasks
+    tasks,
+    addTask: task => {
+      setTasks([...tasks, task]);
+    }
   };
 };

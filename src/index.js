@@ -7,7 +7,7 @@ import useTaskState from './useTaskState';
 import './styles.css';
 
 const App = () => {
-  const { tasks } = useTaskState([]);
+  const { tasks, addTask } = useTaskState([]);
 
   return (
     <div className="App">
@@ -20,7 +20,11 @@ const App = () => {
               ) : ( <h1 className="card-title"> Task list:  { tasks.length } items</h1> )
             }
 
-          <TaskForm/>
+          <TaskForm
+            saveTask={ taskText => {
+              addTask(taskText);
+            }}
+          />
 
           <TaskList tasks={tasks}/>
           </div>
