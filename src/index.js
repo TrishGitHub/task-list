@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import TaskForm from './TaskForm';
@@ -7,7 +7,41 @@ import useTaskState from './useTaskState';
 import './styles.css';
 
 const App = () => {
-  const { tasks, addTask, deleteTask } = useTaskState([]);
+  const { tasks, addTask, deleteTask, editTask } = useTaskState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [newValues, setNewValues] = useState({
+    index: null,
+    title: "",
+    description: ""
+  });
+
+  const toggleModal = (action, id) => {
+
+    if(action === "edit") {
+      const taskToUpdate = tasks.map( (task, index) => {
+        if (id === index) {
+          setNewValues({
+              index: index,   
+              title: task.title,
+              description: task.description
+          })
+        }
+        return taskToUpdate;
+      });
+    }
+    else {
+      setNewValues({});
+    }
+    action !== "false" ? setModalVisible(true) : setModalVisible(false);
+  };
+
+  const updateTaskHandler = (event) => {
+    setNewValues({
+      ...newValues,
+      [event.target.name]: event.target.value.trim()
+    });
+  }
 
   return (
     <div className="App">
@@ -24,9 +58,22 @@ const App = () => {
             saveTask={ taskText => {
               addTask(taskText);
             }}
+
+            editTask={ (taskText, index) => {
+              editTask(taskText, index);
+            }}
+            modalVisible={modalVisible}
+            toggleModal={toggleModal}
+            newValues={newValues}
+            updateTaskHandler={updateTaskHandler}
           />
 
-          <TaskList tasks={tasks} deleteTask={deleteTask} />
+          <TaskList 
+            tasks={tasks} 
+            deleteTask={deleteTask} 
+            editTask={editTask} 
+            toggleModal={toggleModal}
+          />
           </div>
         </div>
       </div>
@@ -34,10 +81,5 @@ const App = () => {
   );
 };
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  rootElement
-);
+const rootElement = document.getElementById('root');
+ReactDOM.render(<App />, rootElement);

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-const TaskList = ({ tasks, deleteTask }) => (
+const TaskList = ({ tasks, deleteTask, toggleModal }) => (
 
     <table className="table table-striped table-hover">
       <thead className="thead-dark">
@@ -25,7 +25,13 @@ const TaskList = ({ tasks, deleteTask }) => (
               />
             </td>
 
-            <td className="task-title text-left">{ task.title }</td>
+            <td className="task-title text-left"
+              onClick={() => {
+                toggleModal("edit", index);
+              }}
+            >
+              { task.title }
+            </td>
             <td className="text-left">{ task.description }</td>
             <td>
               <img 

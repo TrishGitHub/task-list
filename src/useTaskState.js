@@ -30,5 +30,15 @@ export default initialValue => {
       const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
       setTasks(updatedTasks);
     },
+
+    editTask: updatedTask => {
+      const editedTaskList = tasks.map( (task, index) => {
+        if (updatedTask.index === index) {
+          return {...task, title: updatedTask.title, description: updatedTask.description};
+        }
+        return task;
+      });
+      setTasks(editedTaskList);
+    }
   };
 };

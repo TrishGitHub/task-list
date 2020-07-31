@@ -1,10 +1,192 @@
-import React, { useState } from "react";
+import React from "react";
 import useInputState from './useInputState';
 
-const TaskForm = ({ saveTask }) => {
+const TaskForm = ({ saveTask, modalVisible, toggleModal, newValues, editTask, updateTaskHandler }) => {
 
   const { form, reset, updateField } = useInputState();
-  const [modalVisible, setModalVisible] = useState(false);
+
+  const renderModal = (newValues) => {
+
+    if(Object.keys(newValues).length !== 0) { return (
+      <div
+      className="modal fade show"
+      id="staticBackdrop"
+      data-backdrop="static"
+      data-keyboard="false"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="staticBackdropLabel"
+      aria-modal="true"
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">
+              Update task
+            </h5>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            
+              onClick={() => toggleModal("false")}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+          <form
+            onSubmit={event => {
+              event.preventDefault();
+              editTask(newValues);
+              reset();
+              toggleModal("false")
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Add task title"
+                id="title"
+                name="title"
+                aria-describedby="name Help"
+                value={ newValues.title }
+                onChange={ updateTaskHandler }
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description</label>
+              <textarea
+                className="form-control"
+                placeholder="Add task decription"
+                id="description"
+                name="description"
+                rows={3}
+                value={ newValues.description }
+                onChange={ updateTaskHandler }
+              />
+            </div>
+            <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-dismiss="modal"
+              onClick={() => toggleModal("false")} 
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+            >
+              Save
+            </button>
+          </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <div 
+        className="modal-overlay"
+        onClick={() => toggleModal("false")}
+      ></div>
+    </div>
+  )} else { return (
+      <div
+      className="modal fade show"
+      id="staticBackdrop"
+      data-backdrop="static"
+      data-keyboard="false"
+      tabIndex={-1}
+      role="dialog"
+      aria-labelledby="staticBackdropLabel"
+      aria-modal="true"
+    >
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">
+              New task
+            </h5>
+            <button
+              type="button"
+              className="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            
+              onClick={() => toggleModal("false")}
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div className="modal-body">
+          <form
+            onSubmit={event => {
+              event.preventDefault();
+              saveTask(form);
+              reset();
+              toggleModal("false")
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Add task title"
+                id="title"
+                name="title"
+                aria-describedby="name Help"
+                value={ form.title }
+                onChange={ updateField }
+              />
+              <small id="name" className="form-text text-muted">
+                We'll never share your email with anyone else.
+              </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="description">Description</label>
+              <textarea
+                className="form-control"
+                placeholder="Add task decription"
+                id="description"
+                name="description"
+                rows={3}
+                value={ form.description }
+                onChange={ updateField }
+              />
+            </div>
+            <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              data-dismiss="modal"
+              onClick={() => toggleModal("false")} 
+            >
+              Cancel
+            </button>
+            <button 
+              type="submit" 
+              className="btn btn-primary"
+              disabled={ form.title.length < 1 || form.description.length < 1 }
+            >
+              Save
+            </button>
+          </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <div 
+        className="modal-overlay"
+        onClick={() => toggleModal("false")}
+      ></div>
+    </div>
+  )}
+}
 
   return (
     <>
@@ -12,7 +194,7 @@ const TaskForm = ({ saveTask }) => {
       <button 
         type="button" 
         className="btn btn-info btn-lg btn-add"
-        onClick={() => setModalVisible(true)}
+        onClick={() => toggleModal("true")}
       >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="20" height="20" fill="#ffffff" className="icon-plus">
         <g fill="#ffffff" stroke="white">
@@ -23,100 +205,7 @@ const TaskForm = ({ saveTask }) => {
         Create new task
       </button>
     </div>
-    { 
-      modalVisible && (
-        <div
-        className="modal fade show"
-        id="staticBackdrop"
-        data-backdrop="static"
-        data-keyboard="false"
-        tabIndex={-1}
-        role="dialog"
-        aria-labelledby="staticBackdropLabel"
-        aria-modal="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="staticBackdropLabel">
-                New task
-              </h5>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              
-              onClick={() => setModalVisible(false)}
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <div className="modal-body">
-            <form
-              onSubmit={event => {
-                event.preventDefault();
-                saveTask(form);
-                reset();
-                setModalVisible(false);
-              }}
-            >
-              <div className="form-group">
-                <label htmlFor="name">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Add task title"
-                  id="title"
-                  name="title"
-                  aria-describedby="name Help"
-                  value={ form.title }
-                  onChange={ updateField }
-                />
-                <small id="name" className="form-text text-muted">
-                  We'll never share your email with anyone else.
-                </small>
-              </div>
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea
-                  className="form-control"
-                  placeholder="Add task decription"
-                  id="description"
-                  name="description"
-                  rows={3}
-                  value={ form.description }
-                  onChange={ updateField }
-                />
-              </div>
-              <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-dismiss="modal"
-                onClick={() => setModalVisible(false)} 
-              >
-                Cancel
-              </button>
-              <button 
-                type="submit" 
-                className="btn btn-primary"
-                disabled={ form.title.length < 1 || form.description.length < 1 }
-              >
-                Save
-              </button>
-            </div>
-            </form>
-            </div>
-          </div>
-        </div>
-        <div 
-          className="modal-overlay"
-          onClick={() => setModalVisible(false)}
-        ></div>
-      </div>
-     ) 
-    }
+    { modalVisible && (renderModal(newValues) ) }
     </>
   );
 };
