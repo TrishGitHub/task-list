@@ -70,5 +70,7 @@ textarea {
   max-height: 200px;
 }
 
-
+.icon-td {
+  min-width: 44px;
+}
 
