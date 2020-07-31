@@ -3,6 +3,7 @@ import React from 'react';
 
 const TaskList = ({ tasks, deleteTask, toggleModal }) => (
 
+  <div className="table-wrap">
     <table className="table table-striped table-hover">
       <thead className="thead-dark">
         <tr>
@@ -49,6 +50,7 @@ const TaskList = ({ tasks, deleteTask, toggleModal }) => (
         )}
       </tbody>
     </table>
+    </div>
 
 );
 

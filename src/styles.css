@@ -1,10 +1,15 @@
 .App {
+  padding: 2rem;
   font-family: sans-serif;
   text-align: center;
 }
 
 .modal.show {
   display: block!important;
+}
+
+.form-group {
+  text-align: left;
 }
 
 .modal-overlay {
@@ -20,10 +25,6 @@
 
 .modal-dialog {
   z-index: 1;
-}
-
-.form-group {
-  text-align: left;
 }
 
 .icon {
@@ -42,15 +43,15 @@
   opacity: 1;
 }
 
+.btn-wrap {
+  margin-bottom: 2rem;
+  text-align: right;
+}
+
 .icon-plus {
   display: inline-block;
   margin-right: 10px;
   transform: translateY(-2px);
-}
-
-.btn-wrap {
-  margin-bottom: 2rem;
-  text-align: right;
 }
 
 .card-title {
@@ -74,3 +75,25 @@ textarea {
   min-width: 44px;
 }
 
+.table {
+  min-width: 425px;
+}
+
+.table-wrap {
+  position: relative;
+  overflow: scroll;
+}
+
+@media (max-width: 576px) {
+  .App {
+    padding: 20px;
+  }
+
+  .container {
+    padding: 0;
+  }
+
+  .btn-wrap {
+    text-align: center;
+  }
+}
