@@ -1,6 +1,7 @@
+
 import React from 'react';
 
-const TaskList = ({ tasks, deleteTask, editTask, toggleModal }) => (
+const TaskList = ({ tasks, deleteTask }) => (
 
     <table className="table table-striped table-hover">
       <thead className="thead-dark">
@@ -16,7 +17,7 @@ const TaskList = ({ tasks, deleteTask, editTask, toggleModal }) => (
         { tasks.map( (task, index) => (
           <tr key={ index }>
             <th scope="row">{ index + 1 }</th>
-            <td className="icon-td"> 
+            <td> 
               <img 
                 src="/assets/icons/envelope.png" 
                 className="icon icon-title" 
@@ -24,13 +25,7 @@ const TaskList = ({ tasks, deleteTask, editTask, toggleModal }) => (
               />
             </td>
 
-            <td 
-              className="task-title text-left"
-              onClick={() => {
-                toggleModal("edit", task, index);
-              }}
-            >
-            { task.title }</td>
+            <td className="task-title text-left">{ task.title }</td>
             <td className="text-left">{ task.description }</td>
             <td>
               <img 
