@@ -2,3 +2,26 @@
   font-family: sans-serif;
   text-align: center;
 }
+
+.modal.show {
+  display: block!important;
+}
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left:0;
+  display: block;
+  background: rgb(0 0 0 / .4);
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.modal-dialog {
+  z-index: 1;
+}
+
+
+
+
