@@ -13,6 +13,10 @@ export default initialValue => {
     tasks,
     addTask: task => {
       setTasks([...tasks, task]);
-    }
+    },
+    deleteTask: taskIndex => {
+      const updatedTasks = tasks.filter((_, index) => index !== taskIndex);
+      setTasks(updatedTasks);
+    },
   };
 };

@@ -7,7 +7,7 @@ import useTaskState from './useTaskState';
 import './styles.css';
 
 const App = () => {
-  const { tasks, addTask } = useTaskState([]);
+  const { tasks, addTask, deleteTask } = useTaskState([]);
 
   return (
     <div className="App">
@@ -26,7 +26,7 @@ const App = () => {
             }}
           />
 
-          <TaskList tasks={tasks}/>
+          <TaskList tasks={tasks} deleteTask={deleteTask} />
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 
-const TaskList = ({ tasks }) => (
+const TaskList = ({ tasks, deleteTask }) => (
 
     <table className="table table-striped table-hover">
       <thead className="thead-dark">
@@ -33,6 +33,9 @@ const TaskList = ({ tasks }) => (
                 className="icon icon-delete" 
                 alt="remove task" 
                 title="remove task"
+                onClick={() => {
+                  deleteTask(index);
+                }}
               />
               </td>
           </tr>
